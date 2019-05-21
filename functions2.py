@@ -11,10 +11,10 @@ import pandas as pd
 from scipy.cluster.hierarchy import dendrogram
 
 
-# In[2]:
+# In[9]:
 
 
-def display_circles(filename, pcs, n_comp, pca, axis_ranks, labels=None, label_rotation=0, lims=None):
+def display_circles(pcs, n_comp, pca, axis_ranks, labels=None, label_rotation=0, lims=None, name=None):
     for d1, d2 in axis_ranks: # On affiche les 3 premiers plans factoriels, donc les 6 premières composantes
         if d2 < n_comp:
 
@@ -63,14 +63,18 @@ def display_circles(filename, pcs, n_comp, pca, axis_ranks, labels=None, label_r
             plt.ylabel('F{} ({}%)'.format(d2+1, round(100*pca.explained_variance_ratio_[d2],1)))
 
             plt.title("Cercle des corrélations (F{} et F{})".format(d1+1, d2+1))
-            plt.savefig(filename)
+            if name is not None :
+                plt.savefig(name)
+            else:
+                plt.savefig("Graphiques/cercle_des_correlations")
+            
             plt.show(block=False)
 
 
-# In[3]:
+# In[7]:
 
 
-def display_factorial_planes(X_projected, n_comp, pca, axis_ranks, labels=None, alpha=1, illustrative_var=None):
+def display_factorial_planes(X_projected, n_comp, pca, axis_ranks, labels=None, alpha=1, illustrative_var=None, name=None):
     for d1,d2 in axis_ranks:
         if d2 < n_comp:
  
@@ -107,11 +111,14 @@ def display_factorial_planes(X_projected, n_comp, pca, axis_ranks, labels=None, 
             plt.ylabel('F{} ({}%)'.format(d2+1, round(100*pca.explained_variance_ratio_[d2],1)))
 
             plt.title("Projection des individus (sur F{} et F{})".format(d1+1, d2+1))
-            plt.savefig("Graphiques/projection_individus.png")
+            if name is not None :
+                plt.savefig(name)
+            else:
+                plt.savefig("Graphiques/projection_des_individus.png")
             plt.show(block=False)
 
 
-# In[8]:
+# In[4]:
 
 
 def display_scree_plot(pca):
